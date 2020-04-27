@@ -10,7 +10,7 @@ the corresponding SQL files.
   
 The result of running this service should be equal to the CLI command below:
 ```shell script
-/path/to/liquibase-3.8.8-bin/liquibase --url=offline:<db-type> --changeLogFile=/path/to/changelogyml updateSQL
+/path/to/liquibase-3.8.8-bin/liquibase --url=offline:<db-type> --changeLogFile=/path/to/changelog.yml updateSQL
 ```
 
 ## Limitations
