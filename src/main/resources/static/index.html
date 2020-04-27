@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      padding: 30px;
+      font-family: 'Ubuntu Mono', monospace;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+<a class="github-fork-ribbon" href="https://github.com/polarfish/update-sql" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+<div class="container-fluid min-vh-100 d-flex flex-column">
+  <div class="row">
+    <h1>Liquibase (3.8.8) updateSQL service</h1>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <form class="h-100">
+        <label class="radio-inline">
+          <input type="radio" id="mysql_type" name="dbType" value="mysql" checked> mysql
+        </label>
+        <label class="radio-inline">
+          <input type="radio" id="mssql_type" name="dbType" value="mssql"> mssql
+        </label>
+        <label class="radio-inline">
+          <input type="radio" id="oracle_type" name="dbType" value="oracle"> oracle
+        </label>
+        <button type="button" id="updateSql" class="btn btn-primary">updateSQL</button>
+        <div>
+          databaseChangeLog:
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row flex-grow-1">
+    <div class="col-6">
+      <textarea class="form-control h-75" id="changelog"></textarea>
+    </div>
+    <div class="col-6">
+      <textarea class="form-control h-75" id="sql"></textarea>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+  let updateSqlButton = document.getElementById("updateSql");
+  let changeLogTextarea = document.getElementById("changelog");
+  let sqlTextarea = document.getElementById("sql");
+  updateSqlButton.addEventListener('click', function () {
+
+    if (!changeLogTextarea.value.trim()) {
+      return;
+    }
+
+    updateSqlButton.disabled = true;
+
+    fetch('./api/v1/update-sql?dbType=' + document.querySelector("input[name='dbType']:checked").value,
+        {
+          method: 'post',
+          headers: {
+            "Content-type": "text/plain; charset=UTF-8"
+          },
+          body: changeLogTextarea.value
+        })
+    .then(
+        function (response) {
+          response.text().then(function (data) {
+            sqlTextarea.value = data;
+          });
+          updateSqlButton.disabled = false;
+        }
+    )
+    .catch(function (err) {
+      console.log('Fetch Error :-S', err);
+    })
+    .finally(function () {
+      updateSqlButton.disabled = false;
+    });
+  }, false);
+</script>
+</html>
