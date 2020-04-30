@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>11</java.version>
+        <liquibase.version>3.8.9</liquibase.version>
     </properties>
 
     <dependencies>
@@ -36,6 +37,11 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquibase.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
