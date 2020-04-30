@@ -21,7 +21,7 @@
 <a class="github-fork-ribbon" href="https://github.com/polarfish/update-sql" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
 <div class="container-fluid min-vh-100 d-flex flex-column">
   <div class="row">
-    <h1>Liquibase (3.8.8) updateSQL service</h1>
+    <h1>Liquibase (3.8.8) generate SQL service</h1>
   </div>
   <div class="row">
     <div class="col-12">
@@ -44,10 +44,10 @@
   </div>
   <div class="row flex-grow-1">
     <div class="col-6">
-      <textarea class="form-control h-75" id="changelog"></textarea>
+      <textarea class="form-control h-75" id="changelog" placeholder="Paste databaseChangeLog or separate changeSet(s) here"></textarea>
     </div>
     <div class="col-6">
-      <textarea class="form-control h-75" id="sql"></textarea>
+      <textarea class="form-control h-75" id="sql" readonly></textarea>
     </div>
   </div>
 </div>
