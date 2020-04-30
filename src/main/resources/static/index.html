@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css"/>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -18,7 +19,8 @@
   </style>
 </head>
 <body>
-<a class="github-fork-ribbon" href="https://github.com/polarfish/update-sql" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
+<a class="github-fork-ribbon" href="https://github.com/polarfish/update-sql" data-ribbon="Fork me on GitHub"
+   title="Fork me on GitHub">Fork me on GitHub</a>
 <div class="container-fluid min-vh-100 d-flex flex-column">
   <div class="row">
     <h1>Liquibase (3.8.9) generate SQL service</h1>
@@ -36,6 +38,7 @@
           <input type="radio" id="oracle_type" name="dbType" value="oracle"> oracle
         </label>
         <button type="button" id="updateSql" class="btn btn-primary">updateSQL</button>
+        <button type="button" id="loadDemoChangelog" class="btn btn-light">Load demo ChangeLog</button>
         <div>
           databaseChangeLog:
         </div>
@@ -44,7 +47,8 @@
   </div>
   <div class="row flex-grow-1">
     <div class="col-6">
-      <textarea class="form-control h-75" id="changelog" placeholder="Paste databaseChangeLog or separate changeSet(s) here"></textarea>
+      <textarea class="form-control h-75" id="changelog"
+                placeholder="Paste databaseChangeLog or separate changeSet(s) here"></textarea>
     </div>
     <div class="col-6">
       <textarea class="form-control h-75" id="sql" readonly></textarea>
@@ -54,6 +58,7 @@
 </body>
 <script>
   let updateSqlButton = document.getElementById("updateSql");
+  let loadDemoChangelog = document.getElementById("loadDemoChangelog");
   let changeLogTextarea = document.getElementById("changelog");
   let sqlTextarea = document.getElementById("sql");
   updateSqlButton.addEventListener('click', function () {
@@ -81,11 +86,76 @@
         }
     )
     .catch(function (err) {
-      console.log('Fetch Error :-S', err);
+      console.log('Fetch Error: ', err);
     })
     .finally(function () {
       updateSqlButton.disabled = false;
     });
   }, false);
+
+  loadDemoChangelog.addEventListener('click', function () {
+    changeLogTextarea.value =
+`databaseChangeLog:
+  - changeSet:
+      id: JIRA-100499-uin-dignissim-libero-rhoncus-quis
+      author: Pellentesque Fringilla
+      comment: Duis maximus, magna vel dignissim interdum.
+      changes:
+        - update:
+            tableName: condimentum
+            columns:
+              - column:
+                  name: status
+                  value: VIVAMUS
+            where: status = 'LACUS'
+  - property:
+      name: uuid
+      value: lower(newid())
+      dbms: "mssql"
+  - property:
+      name: uuid
+      value: lower(regexp_replace(rawtohex(sys_guid()), '([A-F0-9]{8})([A-F0-9]{4})([A-F0-9]{4})([A-F0-9]{4})([A-F0-9]{12})', '\\1-\\2-\\3-\\4-\\5'))
+      dbms: "oracle"
+  - property:
+      name: uuid
+      value: uuid()
+      dbms: "mysql"
+  - changeSet:
+      id: JIRA-100500-lorem-ipsum-dolor-sit-amet
+      author: Faucibus Malesuada
+      comment: Vestibulum ante ipsum primis in faucibus orci luctus.
+      changes:
+        - addNotNullConstraint:
+            tableName: condimentum
+            columnName: code
+            columnDataType: VARCHAR(4)
+        - modifyDataType:
+            tableName: condimentum
+            columnName: status
+            newDataType: VARCHAR(50)
+        - addColumn:
+            tableName: tempus
+            columns:
+              - column:
+                  name: external_key
+                  type: VARCHAR(36)
+              - column:
+                  name: status
+                  type: VARCHAR(50)
+        - update:
+            tableName: tempus
+            columns:
+              - column:
+                  name: external_key
+                  valueComputed: \${uuid}
+        - addNotNullConstraint:
+            tableName: tempus
+            columnName: external_key
+            columnDataType: VARCHAR(36)
+        - addUniqueConstraint:
+            tableName: tempus
+            columnNames: condimentum_id, external_key
+            constraintName: uq_nulla_vel_lacus`;
+  });
 </script>
 </html>
