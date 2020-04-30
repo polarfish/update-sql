@@ -48,10 +48,11 @@
   <div class="row flex-grow-1">
     <div class="col-6">
       <textarea class="form-control h-75" id="changelog"
+                spellcheck="false"
                 placeholder="Paste databaseChangeLog or separate changeSet(s) here"></textarea>
     </div>
     <div class="col-6">
-      <textarea class="form-control h-75" id="sql" readonly></textarea>
+      <textarea class="form-control h-75" id="sql" spellcheck="false" readonly></textarea>
     </div>
   </div>
 </div>
@@ -95,7 +96,7 @@
 
   loadDemoChangelog.addEventListener('click', function () {
     changeLogTextarea.value =
-`databaseChangeLog:
+        `databaseChangeLog:
   - changeSet:
       id: JIRA-100499-uin-dignissim-libero-rhoncus-quis
       author: Pellentesque Fringilla
