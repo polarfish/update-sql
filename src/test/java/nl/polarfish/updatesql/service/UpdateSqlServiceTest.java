@@ -21,6 +21,11 @@ class UpdateSqlServiceTest {
         testUpdateSql("changelog/basic.yml");
     }
 
+    @Test
+    void updateSql_complex() {
+        testUpdateSql("changelog/complex.yml");
+    }
+
     private void testUpdateSql(String changeLogPath) {
         List.of("mysql", "mssql", "oracle").forEach(dbType ->
             {
