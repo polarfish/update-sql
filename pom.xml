@@ -10,13 +10,15 @@
     </parent>
     <groupId>nl.polarfish</groupId>
     <artifactId>update-sql</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
     <name>update-sql</name>
     <description>Liquibase updateSQL command as a service</description>
 
     <properties>
         <java.version>11</java.version>
         <liquibase.version>3.8.9</liquibase.version>
+        <jib-maven-plugin.version>2.2.0</jib-maven-plugin.version>
+        <commons-io.version>2.6</commons-io.version>
     </properties>
 
     <dependencies>
@@ -27,6 +29,7 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
+            <version>${liquibase.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -36,12 +39,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <version>${liquibase.version}</version>
+            <version>${commons-io.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -61,6 +59,16 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${jib-maven-plugin.version}</version>
+                <configuration>
+                    <to>
+                        <image>polarfish/update-sql</image>
+                    </to>
+                </configuration>
             </plugin>
         </plugins>
     </build>
