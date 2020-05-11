@@ -24,8 +24,7 @@ The service:
 
 ### Docker
 ```shell script
-docker run -d -p 8080:8080 polarfish/update-sql:1.0.0     # amd64
-docker run -d -p 8080:8080 polarfish/update-sql:1.0.0-arm # armv7
+docker run -d -p 8080:8080 polarfish/update-sql
 ```
 
 ### JAR
