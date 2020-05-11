@@ -39,4 +39,4 @@ mvn spring-boot:run
 ```
 
 ## Screenshots
-![image](https://user-images.githubusercontent.com/1070579/80924837-b0899a80-8d8b-11ea-9418-bd3252572fdb.png)
+![image](https://user-images.githubusercontent.com/1070579/81563018-01a21b80-9396-11ea-94ad-d5f3d11c35e7.png)
