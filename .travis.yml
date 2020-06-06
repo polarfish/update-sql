@@ -2,28 +2,26 @@ language: java
 jdk:
   - openjdk11
 install: true
-cache:
-  directories:
-    - $HOME/.m2
 script:
-- git config --local user.name "Travis CI"
-- git config --local user.email "builds@travis-ci.com"
-- git checkout -f master
-- mvn -B release:prepare -DscmCommentPrefix="[ci skip][maven-release-plugin] " -Dusername=${GITHUB_USERNAME} -Dpassword=${GITHUB_TOKEN}
+  - git config --local user.name "Travis CI"
+  - git config --local user.email "builds@travis-ci.com"
+  - git checkout -f master
+  - mvn -B release:prepare -DscmCommentPrefix="[ci skip][maven-release-plugin] " -Dusername=${GITHUB_USERNAME} -Dpassword=${GITHUB_TOKEN}
 before_deploy:
-- export TAG=$(git describe --tags --abbrev=0)
+  - export TAG=$(git describe --tags --abbrev=0)
 deploy:
-  - provider: releases
-    skip_cleanup: true
-    api_key: ${GITHUB_TOKEN}
-    tag_name: $TAG
-    file:
-      - target/$TAG.jar
-    on:
-      repo: polarfish/update-sql
-    name: $TAG
-  - provider: script
-    script: git checkout $TAG && mvn jib:build -Djib.to.auth.username=${DOCKER_HUB_USERNAME} -Djib.to.auth.password=${DOCKER_HUB_TOKEN}
+  skip_cleanup: true
+  provider: releases
+  api_key: ${GITHUB_TOKEN}
+  tag_name: $TAG
+  file:
+    - target/$TAG.jar
+  on:
+    repo: polarfish/update-sql
+  name: $TAG
+after_success:
+  - git checkout $TAG
+  - mvn clean package jib:build -Djib.to.auth.username=${DOCKER_HUB_USERNAME} -Djib.to.auth.password=${DOCKER_HUB_TOKEN} -Dmaven.test.skip=true
 branches:
   only:
-  - master
+    - master
