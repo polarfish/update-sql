@@ -10,7 +10,7 @@
     </parent>
     <groupId>nl.polarfish</groupId>
     <artifactId>update-sql</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.3-SNAPSHOT</version>
     <name>update-sql</name>
     <description>Liquibase updateSQL command as a service</description>
 
@@ -76,7 +76,6 @@
                         <image>polarfish/update-sql</image>
                         <tags>
                             <tag>${project.version}</tag>
-                            <tag>latest</tag>
                         </tags>
                     </to>
                 </configuration>
