@@ -80,9 +80,11 @@
         })
     .then(
         function (response) {
-          response.text().then(function (data) {
-            sqlTextarea.value = data;
-          });
+          if (response.status === 400) {
+            response.json().then(json => sqlTextarea.value = JSON.stringify(json, null, 2));
+          } else {
+            response.text().then(sql => sqlTextarea.value = sql);
+          }
           updateSqlButton.disabled = false;
         }
     )
