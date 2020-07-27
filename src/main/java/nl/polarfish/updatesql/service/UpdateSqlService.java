@@ -50,6 +50,7 @@ public class UpdateSqlService {
             liquibase.update(new Contexts(), new LabelExpression(), writer, false);
             return writer.toString();
         } catch (Exception e) {
+            log.info("Error", e);
             throw new UpdateSqlException("Failed to generate SQL from the provided change log", e);
         }
     }
