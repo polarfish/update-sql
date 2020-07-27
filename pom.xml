@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.0.RELEASE</version>
+        <version>2.3.2.RELEASE</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
     <groupId>nl.polarfish</groupId>
@@ -22,8 +22,8 @@
 
     <properties>
         <java.version>11</java.version>
-        <liquibase.version>3.9.0</liquibase.version>
-        <jib-maven-plugin.version>2.3.0</jib-maven-plugin.version>
+        <liquibase.version>4.0.0</liquibase.version>
+        <jib-maven-plugin.version>2.4.0</jib-maven-plugin.version>
         <commons-io.version>2.6</commons-io.version>
     </properties>
 
