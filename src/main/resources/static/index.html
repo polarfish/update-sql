@@ -100,67 +100,18 @@
     changeLogTextarea.value =
         `databaseChangeLog:
   - changeSet:
-      id: JIRA-100499-uin-dignissim-libero-rhoncus-quis
-      author: Pellentesque Fringilla
-      comment: Duis maximus, magna vel dignissim interdum.
+      id: createTable-example
+      author: liquibase-docs
       changes:
-        - sqlFile:
-            path: classpath:/db/sql/dictum-justo-porttitor-quis.sql
-        - update:
-            tableName: condimentum
-            columns:
-              - column:
-                  name: status
-                  value: VIVAMUS
-            where: status = 'LACUS'
-  - property:
-      name: uuid
-      value: lower(newid())
-      dbms: "mssql"
-  - property:
-      name: uuid
-      value: lower(regexp_replace(rawtohex(sys_guid()), '([A-F0-9]{8})([A-F0-9]{4})([A-F0-9]{4})([A-F0-9]{4})([A-F0-9]{12})', '\\1-\\2-\\3-\\4-\\5'))
-      dbms: "oracle"
-  - property:
-      name: uuid
-      value: uuid()
-      dbms: "mysql"
-  - changeSet:
-      id: JIRA-100500-lorem-ipsum-dolor-sit-amet
-      author: Faucibus Malesuada
-      comment: Vestibulum ante ipsum primis in faucibus orci luctus.
-      changes:
-        - addNotNullConstraint:
-            tableName: condimentum
-            columnName: code
-            columnDataType: VARCHAR(4)
-        - modifyDataType:
-            tableName: condimentum
-            columnName: status
-            newDataType: VARCHAR(50)
-        - addColumn:
-            tableName: tempus
-            columns:
-              - column:
-                  name: external_key
-                  type: VARCHAR(36)
-              - column:
-                  name: status
-                  type: VARCHAR(50)
-        - update:
-            tableName: tempus
-            columns:
-              - column:
-                  name: external_key
-                  valueComputed: \${uuid}
-        - addNotNullConstraint:
-            tableName: tempus
-            columnName: external_key
-            columnDataType: VARCHAR(36)
-        - addUniqueConstraint:
-            tableName: tempus
-            columnNames: condimentum_id, external_key
-            constraintName: uq_nulla_vel_lacus`;
+      - createTable:
+          catalogName: cat
+          columns:
+          - column:
+              name: address
+              type: varchar(255)
+          schemaName: public
+          tableName: person
+          tablespace: A String`;
   });
 </script>
 </html>
