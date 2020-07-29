@@ -1,6 +1,7 @@
 # update-sql
 
 [![Build Status](https://travis-ci.com/polarfish/update-sql.svg?branch=master)](https://travis-ci.com/polarfish/update-sql)
+![Build](https://github.com/polarfish/update-sql/workflows/Build/badge.svg)
 
 Liquibase updateSQL command as a service.  
 
