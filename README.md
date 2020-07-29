@@ -1,3 +1,4 @@
+[![][actions build img]][actions build]
 # update-sql
 
 [![Build Status](https://travis-ci.com/polarfish/update-sql.svg?branch=master)](https://travis-ci.com/polarfish/update-sql)
