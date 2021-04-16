@@ -106,15 +106,25 @@
       id: createTable-example
       author: liquibase-docs
       changes:
-      - createTable:
-          catalogName: cat
-          columns:
-          - column:
-              name: address
-              type: varchar(255)
-          schemaName: public
-          tableName: person
-          tablespace: A String`;
+        - createTable:
+            tableName: person
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(255)
+  - changeSet:
+      id: createSequence-example
+      author: liquibase-docs
+      changes:
+        - createSequence:
+            sequenceName: seq_id
+            startValue: 1
+            incrementBy: 100`;
   });
 </script>
 </html>
