@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.5</version>
-        <relativePath /> <!-- lookup parent from repository -->
+        <version>2.5.1</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>nl.polarfish</groupId>
     <artifactId>update-sql</artifactId>
-    <version>1.0.7-SNAPSHOT</version>
+    <version>1.1.0</version>
     <name>update-sql</name>
     <description>Liquibase updateSQL command as a service</description>
 
@@ -22,9 +23,9 @@
 
     <properties>
         <java.version>11</java.version>
-        <liquibase.version>4.3.3</liquibase.version>
-        <jib-maven-plugin.version>3.0.0</jib-maven-plugin.version>
-        <commons-io.version>2.6</commons-io.version>
+        <liquibase.version>3.10.3</liquibase.version>
+        <jib-maven-plugin.version>3.1.1</jib-maven-plugin.version>
+        <commons-io.version>2.7</commons-io.version>
     </properties>
 
     <dependencies>
@@ -70,16 +71,66 @@
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>${jib-maven-plugin.version}</version>
-                <configuration>
-                    <to>
-                        <image>polarfish/update-sql</image>
-                        <tags>
-                            <tag>${project.version}</tag>
-                        </tags>
-                    </to>
-                </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>docker-images</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>build-docker-image-for-arm64</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                                <configuration>
+                                    <from>
+                                        <image>arm64v8/adoptopenjdk:11-jre@sha256:abc133da7cb9eced45b6897d8b990eb8b3c0112b8414cb43eb0f982500e4e111</image>
+                                        <platforms>
+                                            <platform>
+                                                <architecture>arm64</architecture>
+                                                <os>linux</os>
+                                            </platform>
+                                        </platforms>
+                                    </from>
+                                    <to>
+                                        <image>polarfish/update-sql:${project.version}-arm64</image>
+                                    </to>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>build-docker-image-for-amd64</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                                <configuration>
+                                    <from>
+                                        <image>gcr.io/distroless/java-debian10@sha256:151d5757a64b76bdc41788c68ef20eb8dc70806c2d72e88fe7394765ce2bc64d</image>
+                                        <platforms>
+                                            <platform>
+                                                <architecture>amd64</architecture>
+                                                <os>linux</os>
+                                            </platform>
+                                        </platforms>
+                                    </from>
+                                    <to>
+                                        <image>polarfish/update-sql:${project.version}-amd64</image>
+                                    </to>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

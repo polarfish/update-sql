@@ -23,7 +23,7 @@
    title="Fork me on GitHub">Fork me on GitHub</a>
 <div class="container-fluid min-vh-100 d-flex flex-column">
   <div class="row">
-    <h1>Liquibase (4.3.3) generate SQL service</h1>
+    <h1>Liquibase (3.10.3) generate SQL service</h1>
   </div>
   <div class="row">
     <div class="col-12">
@@ -41,9 +41,10 @@
           <input type="radio" id="oracle_type" name="dbType" value="oracle"> oracle
         </label>
         <button type="button" id="updateSql" class="btn btn-primary">updateSQL</button>
-        <button type="button" id="loadDemoChangelog" class="btn btn-light">Load demo ChangeLog</button>
+        <button type="button" id="loadDemoChangelogYaml" class="btn btn-light">Demo YAML</button>
+        <button type="button" id="loadDemoChangelogXml" class="btn btn-light">Demo XML</button>
         <div>
-          databaseChangeLog:
+          &nbsp;
         </div>
       </form>
     </div>
@@ -52,7 +53,7 @@
     <div class="col-6">
       <textarea class="form-control h-75" id="changelog"
                 spellcheck="false"
-                placeholder="Paste databaseChangeLog or separate changeSet(s) here"></textarea>
+                placeholder="Paste databaseChangeLog or separate changeSet(s) here in YAML or XML format"></textarea>
     </div>
     <div class="col-6">
       <textarea class="form-control h-75" id="sql" spellcheck="false" readonly></textarea>
@@ -62,7 +63,8 @@
 </body>
 <script>
   let updateSqlButton = document.getElementById("updateSql");
-  let loadDemoChangelog = document.getElementById("loadDemoChangelog");
+  let loadDemoChangelogYaml = document.getElementById("loadDemoChangelogYaml");
+  let loadDemoChangelogXml = document.getElementById("loadDemoChangelogXml");
   let changeLogTextarea = document.getElementById("changelog");
   let sqlTextarea = document.getElementById("sql");
   updateSqlButton.addEventListener('click', function () {
@@ -99,7 +101,7 @@
     });
   }, false);
 
-  loadDemoChangelog.addEventListener('click', function () {
+  loadDemoChangelogYaml.addEventListener('click', function () {
     changeLogTextarea.value =
         `databaseChangeLog:
   - changeSet:
@@ -125,6 +127,30 @@
             sequenceName: seq_id
             startValue: 1
             incrementBy: 100`;
+  });
+
+  loadDemoChangelogXml.addEventListener('click', function () {
+    changeLogTextarea.value =
+        `<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+
+    <changeSet id="createTable-example" author="liquibase-docs">
+        <createTable tableName="person">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="createSequence-example" author="liquibase-docs">
+        <createSequence sequenceName="seq_id" startValue="1" incrementBy="100"/>
+    </changeSet>
+
+</databaseChangeLog>`;
   });
 </script>
 </html>

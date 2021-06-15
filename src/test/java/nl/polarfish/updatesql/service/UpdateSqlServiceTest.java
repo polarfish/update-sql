@@ -13,13 +13,23 @@ class UpdateSqlServiceTest {
     private final UpdateSqlService liquibaseService = new UpdateSqlService();
 
     @Test
-    void updateSql_basic() {
+    void updateSql_basicYml() {
         testUpdateSql("changelog/basic.yml");
     }
 
     @Test
-    void updateSql_complex() {
+    void updateSql_basicXml() {
+        testUpdateSql("changelog/basic.xml");
+    }
+
+    @Test
+    void updateSql_complexYml() {
         testUpdateSql("changelog/complex.yml");
+    }
+
+    @Test
+    void updateSql_complexXml() {
+        testUpdateSql("changelog/complex.xml");
     }
 
     private void testUpdateSql(String changeLogPath) {
@@ -30,9 +40,9 @@ class UpdateSqlServiceTest {
                     String.format("Changelog %s should generate right SQL for %s",
                         fileName, dbType),
                     liquibaseService.updateSql(readClasspathFileToString(changeLogPath), dbType),
-                    is(readClasspathFileToString(String.format("sql/%s/%s", dbType, fileName.replace("yml", "sql")))));
+                    is(readClasspathFileToString(
+                        String.format("sql/%s/%s", dbType, fileName + ".sql"))));
             }
         );
     }
-
 }

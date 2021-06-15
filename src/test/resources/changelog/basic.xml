@@ -1,0 +1,4 @@
+<changeSet id="JIRA-1234-extend-model-label-max-length" author="Eugene Grybinnyk">
+    <comment>Extends (factory generated) model label max length to 40 characters.</comment>
+    <modifyDataType tableName="product" columnName="model_label" newDataType="VARCHAR(40)"/>
+</changeSet>
