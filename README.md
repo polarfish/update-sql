@@ -17,7 +17,7 @@ The result of running this service should be equal to the CLI command below:
 
 ## Limitations
 The service:
-- currently, supports only YAML changelogs (not JSON nor XML)
+- currently, supports YAML and XML changelogs (not JSON)
 - generates SQL for MySql, MariaDB, MSSQL and Oracle databases
 - replaces external SQL files inclusion with `-- Content placeholder (<file-name>)`
 - does not support external changelogs inclusion (will result in Bad Request)
@@ -25,8 +25,17 @@ The service:
 ## Running
 
 ### Docker
+
+#### AMD64
+
 ```shell script
-docker run -d -p 8080:8080 polarfish/update-sql
+docker run -d -p 8080:8080 polarfish/update-sql:1.1.0-amd64
+```
+
+#### ARM64
+
+```shell script
+docker run -d -p 8080:8080 polarfish/update-sql:1.1.0-arm64
 ```
 
 ### JAR
