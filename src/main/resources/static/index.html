@@ -23,16 +23,13 @@
    title="Fork me on GitHub">Fork me on GitHub</a>
 <div class="container-fluid min-vh-100 d-flex flex-column">
   <div class="row">
-    <h1>Liquibase (3.10.3) generate SQL service</h1>
+    <h1>Liquibase (4.7.1) generate SQL service</h1>
   </div>
   <div class="row">
     <div class="col-12">
       <form class="h-100">
         <label class="radio-inline">
           <input type="radio" id="mysql_type" name="dbType" value="mysql" checked> mysql
-        </label>
-        <label class="radio-inline">
-          <input type="radio" id="mariadb_type" name="dbType" value="mariadb"> mariadb
         </label>
         <label class="radio-inline">
           <input type="radio" id="mssql_type" name="dbType" value="mssql"> mssql
@@ -135,7 +132,7 @@
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.7.xsd">
 
     <changeSet id="createTable-example" author="liquibase-docs">
         <createTable tableName="person">

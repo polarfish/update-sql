@@ -11,7 +11,6 @@ import liquibase.LabelExpression;
 import liquibase.Liquibase;
 import liquibase.SimplifiedLiquibase;
 import liquibase.database.SimplifiedOfflineConnection;
-import liquibase.sdk.resource.MockResourceAccessor;
 import lombok.extern.slf4j.Slf4j;
 import nl.polarfish.updatesql.exception.UpdateSqlException;
 import org.springframework.stereotype.Service;
@@ -46,7 +45,7 @@ public class UpdateSqlService {
         };
         contentByFileName.put(changeLogFileName, changeLogContent);
 
-        var resourceAccessor = new MockResourceAccessor(contentByFileName);
+        var resourceAccessor = new MyMockResourceAccessor(contentByFileName);
         var offlineConnection = new SimplifiedOfflineConnection("offline:" + dbType, resourceAccessor);
 
         try (Liquibase liquibase = new SimplifiedLiquibase(changeLogFileName, resourceAccessor, offlineConnection);
@@ -74,7 +73,7 @@ public class UpdateSqlService {
                 + "xmlns=\"http://www.liquibase.org/xml/ns/dbchangelog\" "
                 + "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
                 + "xmlns:ext=\"http://www.liquibase.org/xml/ns/dbchangelog-ext\" "
-                + "xsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd "
+                + "xsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.7.xsd "
                 + "http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd\">\n"
                 + changeLogContent + "\n</databaseChangeLog>");
     }

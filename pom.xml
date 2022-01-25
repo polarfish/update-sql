@@ -10,7 +10,7 @@
     </parent>
     <groupId>nl.polarfish</groupId>
     <artifactId>update-sql</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <name>update-sql</name>
     <description>Liquibase updateSQL command as a service</description>
 
@@ -23,9 +23,9 @@
 
     <properties>
         <java.version>11</java.version>
-        <liquibase.version>3.10.3</liquibase.version>
-        <jib-maven-plugin.version>3.1.1</jib-maven-plugin.version>
-        <commons-io.version>2.7</commons-io.version>
+        <liquibase.version>4.7.1</liquibase.version>
+        <jib-maven-plugin.version>3.2.0</jib-maven-plugin.version>
+        <commons-io.version>2.11.0</commons-io.version>
     </properties>
 
     <dependencies>
