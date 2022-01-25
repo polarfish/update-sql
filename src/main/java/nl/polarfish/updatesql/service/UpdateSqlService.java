@@ -24,7 +24,7 @@ public class UpdateSqlService {
         boolean isXmlChangelog = changeLogContent.contains("<changeSet ");
         return updateSql(
             isXmlChangelog
-                ? wrapInDatabaseChangeLogXml(changeLogContent)
+                ? processChangeLogXml(changeLogContent)
                 : wrapInDatabaseChangeLogYaml(changeLogContent),
             dbType,
             isXmlChangelog ? "changelog.xml" : "changelog.yml");
@@ -65,6 +65,12 @@ public class UpdateSqlService {
             : ("databaseChangeLog:\n" + changeLogContent);
     }
 
+    public String processChangeLogXml(String changeLogContent) {
+        changeLogContent = wrapInDatabaseChangeLogXml(changeLogContent);
+        changeLogContent = addPreDefinedPropertiesXml(changeLogContent);
+        return changeLogContent;
+    }
+
     public String wrapInDatabaseChangeLogXml(String changeLogContent) {
         return changeLogContent.contains("<databaseChangeLog")
             ? changeLogContent
@@ -76,6 +82,45 @@ public class UpdateSqlService {
                 + "xsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.7.xsd "
                 + "http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd\">\n"
                 + changeLogContent + "\n</databaseChangeLog>");
+    }
+
+    public String addPreDefinedPropertiesXml(String changeLogContent) {
+        return changeLogContent.contains("<property ")
+            ? changeLogContent
+            : changeLogContent.replaceFirst("<changeSet ",
+                "<property dbms=\"mysql\" name=\"autoIncrement\" value=\"true\"/>\n"
+                    + "\n"
+                    + "    <property dbms=\"mssql\" name=\"charDataType\" value=\"NCHAR\"/>\n"
+                    + "    <property dbms=\"mysql\" name=\"charDataType\" value=\"CHAR\"/>\n"
+                    + "    <property dbms=\"oracle\" name=\"charDataType\" value=\"CHAR\"/>\n"
+                    + "\n"
+                    + "    <property dbms=\"mssql\" name=\"varcharDataType\" value=\"NVARCHAR\"/>\n"
+                    + "    <property dbms=\"mysql\" name=\"varcharDataType\" value=\"VARCHAR\"/>\n"
+                    + "    <property dbms=\"oracle\" name=\"varcharDataType\" value=\"VARCHAR2\"/>\n"
+                    + "\n"
+                    + "    <property dbms=\"mssql\" name=\"fixedPointDataType\" value=\"DECIMAL\"/>\n"
+                    + "    <property dbms=\"mysql\" name=\"fixedPointDataType\" value=\"DECIMAL\"/>\n"
+                    + "    <property dbms=\"oracle\" name=\"fixedPointDataType\" value=\"NUMBER\"/>\n"
+                    + "\n"
+                    + "    <property dbms=\"mssql\" name=\"uuidDataType\" value=\"UNIQUEIDENTIFIER\"/>\n"
+                    + "    <property dbms=\"mysql\" name=\"uuidDataType\" value=\"VARBINARY(16)\"/>\n"
+                    + "    <property dbms=\"oracle\" name=\"uuidDataType\" value=\"RAW(16)\"/>\n"
+                    + "\n"
+                    + "    <property dbms=\"mssql\" name=\"clobDataType\" value=\"NVARCHAR(MAX)\"/>\n"
+                    + "    <property dbms=\"mysql\" name=\"clobDataType\" value=\"LONGTEXT\"/>\n"
+                    + "    <property dbms=\"oracle\" name=\"clobDataType\" value=\"CLOB\"/>\n"
+                    + "\n"
+                    + "    <property dbms=\"mssql\" name=\"dateTimeDataType\" value=\"DATETIME2\"/>\n"
+                    + "    <property dbms=\"mysql\" name=\"dateTimeDataType\" value=\"DATETIME\"/>\n"
+                    + "    <property dbms=\"oracle\" name=\"dateTimeDataType\" value=\"TIMESTAMP\"/>\n"
+                    + "\n"
+                    + "    <property dbms=\"mssql\" name=\"timestampDataType\" value=\"DATETIME2\"/>\n"
+                    + "    <property dbms=\"mysql\" name=\"timestampDataType\" value=\"DATETIME\"/>\n"
+                    + "    <property dbms=\"oracle\" name=\"timestampDataType\" value=\"TIMESTAMP\"/>\n"
+                    + "\n"
+                    + "    <property dbms=\"mysql\" name=\"db.type\" value=\"mysql\"/>\n"
+                    + "    <property dbms=\"mssql\" name=\"db.type\" value=\"mssql\"/>\n"
+                    + "    <property dbms=\"oracle\" name=\"db.type\" value=\"oracle\"/>\n<changeSet ");
     }
 
     @PostConstruct

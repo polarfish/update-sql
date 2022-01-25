@@ -5,10 +5,6 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.7.xsd">
 
-    <preConditions>
-        <runningAs username="liquibase"/>
-    </preConditions>
-
     <changeSet id="1" author="nvoxland">
         <createTable tableName="person">
             <column name="id" type="int" autoIncrement="true">
@@ -24,7 +20,7 @@
 
     <changeSet id="2" author="nvoxland">
         <addColumn tableName="person">
-            <column name="username" type="varchar(8)"/>
+            <column name="username" type="${varcharDataType}(8)"/>
         </addColumn>
     </changeSet>
 

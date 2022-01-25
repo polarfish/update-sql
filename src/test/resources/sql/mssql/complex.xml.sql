@@ -3,7 +3,7 @@ CREATE TABLE person (id int IDENTITY (1, 1) NOT NULL, firstname varchar(50), las
 GO
 
 -- Changeset changelog.xml::2::nvoxland
-ALTER TABLE person ADD username varchar(8)
+ALTER TABLE person ADD username nvarchar(8)
 GO
 
 -- Changeset changelog.xml::3::nvoxland
