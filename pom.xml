@@ -23,7 +23,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <liquibase.version>4.7.1</liquibase.version>
+        <liquibase.version>4.8.0</liquibase.version>
         <jib-maven-plugin.version>3.2.0</jib-maven-plugin.version>
         <commons-io.version>2.11.0</commons-io.version>
     </properties>
