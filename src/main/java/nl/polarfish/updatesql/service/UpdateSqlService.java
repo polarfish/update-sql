@@ -19,7 +19,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class UpdateSqlService {
 
+    private final Map<String, String> supportedDbTypesMap = Map.of(
+        "mssql", "mssql",
+        "oracle", "oracle",
+        "mysql", "mysql?version=5",
+        "mysql5", "mysql?version=5",
+        "mysql8", "mysql?version=8"
+    );
+
     public String updateSql(String changeLogContent, String dbType) {
+
+        validateDbType(dbType);
 
         boolean isXmlChangelog = changeLogContent.contains("<changeSet ");
         return updateSql(
@@ -28,6 +38,14 @@ public class UpdateSqlService {
                 : wrapInDatabaseChangeLogYaml(changeLogContent),
             dbType,
             isXmlChangelog ? "changelog.xml" : "changelog.yml");
+    }
+
+    private void validateDbType(String dbType) {
+        if (!supportedDbTypesMap.containsKey(dbType)) {
+            throw new UpdateSqlException(
+                "Requested database type is not supported. Supported types are: "
+                + supportedDbTypesMap.keySet());
+        }
     }
 
     private String updateSql(String changeLogContent, String dbType, String changeLogFileName) {
@@ -46,7 +64,8 @@ public class UpdateSqlService {
         contentByFileName.put(changeLogFileName, changeLogContent);
 
         var resourceAccessor = new MyMockResourceAccessor(contentByFileName);
-        var offlineConnection = new SimplifiedOfflineConnection("offline:" + dbType, resourceAccessor);
+        var offlineConnection = new SimplifiedOfflineConnection(
+            "offline:" + supportedDbTypesMap.get(dbType), resourceAccessor);
 
         try (Liquibase liquibase = new SimplifiedLiquibase(changeLogFileName, resourceAccessor, offlineConnection);
             StringWriter writer = new StringWriter()) {

@@ -8,7 +8,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class UpdateSqlException extends RuntimeException {
 
     @Getter
-    private final String reason;
+    private String reason;
+
+    public UpdateSqlException(String message) {
+        super(message);
+    }
 
     public UpdateSqlException(String message, Throwable cause) {
         super(message, cause);
