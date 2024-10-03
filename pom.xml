@@ -25,7 +25,7 @@
         <java.version>11</java.version>
         <liquibase.version>4.9.1</liquibase.version>
         <jib-maven-plugin.version>3.3.0</jib-maven-plugin.version>
-        <commons-io.version>2.11.0</commons-io.version>
+        <commons-io.version>2.14.0</commons-io.version>
     </properties>
 
     <dependencies>
